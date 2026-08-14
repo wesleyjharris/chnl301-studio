@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build:static"
+  publish = "dist/public"
+
+# Client-side routing: /artists, /music, /press, /about are wouter routes,
+# not files on disk.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

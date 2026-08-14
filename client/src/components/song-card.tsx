@@ -117,15 +117,17 @@ export default function SongCard({ song }: SongCardProps) {
                 <span className="text-xs">Crossfade Ready</span>
               </div>
             )}
-            <a 
-              href={song.spotifyUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-spotify-green hover:underline text-sm flex items-center"
-            >
-              <SiSpotify className="mr-1 h-4 w-4" />
-              Listen on Spotify
-            </a>
+            {song.spotifyUrl && (
+              <a
+                href={song.spotifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-spotify-green hover:underline text-sm flex items-center"
+              >
+                <SiSpotify className="mr-1 h-4 w-4" />
+                Listen on Spotify
+              </a>
+            )}
           </div>
         </>
       )}

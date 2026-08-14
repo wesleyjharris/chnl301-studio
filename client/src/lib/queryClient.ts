@@ -1,50 +1,46 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import {
+  seedArtists,
+  seedSongs,
+  seedBeats,
+  seedSubscriptionPlans,
+} from "@shared/data";
 
-async function throwIfResNotOk(res: Response) {
-  if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+// The site ships as static files, so there is no API server to call.
+// Query keys keep their "/api/..." shape and resolve against the bundled
+// content instead. Adding a route here is all that is needed to expose
+// more content to components.
+function resolveStaticData(path: string): unknown {
+  switch (path) {
+    case "/api/artists":
+      return seedArtists;
+    case "/api/songs":
+      return seedSongs;
+    case "/api/beats":
+      return seedBeats;
+    case "/api/beats/featured":
+      return seedBeats.slice(0, 4);
+    case "/api/subscription-plans":
+      return seedSubscriptionPlans;
   }
+
+  const artistMatch = path.match(/^\/api\/artists\/(\d+)$/);
+  if (artistMatch) {
+    return seedArtists.find((artist) => artist.id === Number(artistMatch[1]));
+  }
+
+  throw new Error(`No static data registered for query key: ${path}`);
 }
 
-export async function apiRequest(
-  method: string,
-  url: string,
-  data?: unknown | undefined,
-): Promise<Response> {
-  const res = await fetch(url, {
-    method,
-    headers: data ? { "Content-Type": "application/json" } : {},
-    body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
-  });
-
-  await throwIfResNotOk(res);
-  return res;
-}
-
-type UnauthorizedBehavior = "returnNull" | "throw";
-export const getQueryFn: <T>(options: {
-  on401: UnauthorizedBehavior;
-}) => QueryFunction<T> =
-  ({ on401: unauthorizedBehavior }) =>
-  async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
-      credentials: "include",
-    });
-
-    if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-      return null;
-    }
-
-    await throwIfResNotOk(res);
-    return await res.json();
-  };
+export const getQueryFn =
+  <T,>(): QueryFunction<T> =>
+  async ({ queryKey }) =>
+    resolveStaticData(queryKey[0] as string) as T;
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      queryFn: getQueryFn({ on401: "throw" }),
+      queryFn: getQueryFn(),
       refetchInterval: false,
       refetchOnWindowFocus: false,
       staleTime: Infinity,

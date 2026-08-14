@@ -19,7 +19,7 @@ export const songs = pgTable("songs", {
   title: text("title").notNull(),
   artistId: integer("artist_id").notNull(),
   duration: text("duration").notNull(),
-  spotifyUrl: text("spotify_url").notNull(),
+  spotifyUrl: text("spotify_url"),
   artworkUrl: text("artwork_url"),
   youtubeUrl: text("youtube_url"),
 });
