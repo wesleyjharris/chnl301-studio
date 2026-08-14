@@ -1,0 +1,455 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+
+  /* Custom colors for music theme */
+  --spotify-green: hsl(55, 70%, 80%);
+  --accent-orange: hsl(14, 100%, 60%);
+  --dark-primary: hsl(0, 0%, 7%);
+  --dark-secondary: hsl(0, 0%, 12%);
+  --dark-tertiary: hsl(0, 0%, 16%);
+  --text-muted: hsl(0, 0%, 70%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-[--dark-primary] text-white;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-monoton {
+    font-family: 'Monoton', cursive;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Old TV Aesthetic Styles */
+  .tv-screen {
+    position: relative;
+    background: #000;
+    border: 20px solid #333;
+    border-radius: 20px;
+    box-shadow: 
+      inset 0 0 50px rgba(0, 0, 0, 0.8),
+      0 0 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .tv-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(
+        90deg,
+        transparent 2px,
+        rgba(255, 255, 255, 0.03) 2px,
+        rgba(255, 255, 255, 0.03) 4px,
+        transparent 4px
+      );
+    background-size: 4px 100%;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .tv-screen::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+      );
+    z-index: 1001;
+    pointer-events: none;
+    animation: scanlines 0.1s linear infinite;
+  }
+
+  @keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+  }
+
+  .tv-content {
+    position: relative;
+    z-index: 10;
+    filter: contrast(1.1) brightness(1.1);
+  }
+
+  .tv-static {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 50% 50%, 
+        rgba(255, 255, 255, 0.01) 0%, 
+        transparent 70%);
+    z-index: 999;
+    pointer-events: none;
+    animation: static 0.5s steps(2) infinite;
+  }
+
+  @keyframes static {
+    0% { opacity: 0.02; }
+    50% { opacity: 0.005; }
+    100% { opacity: 0.02; }
+  }
+
+  .tv-curvature {
+    filter: 
+      contrast(1.15) 
+      brightness(1.05) 
+      saturate(1.2);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  /* TV Bezel styling */
+  .tv-bezel {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 3px solid #444;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 
+      inset 0 0 20px rgba(0, 0, 0, 0.5),
+      0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .tv-bezel::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 2px solid #555;
+    border-radius: 15px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* TV brand/logo styling */
+  .tv-brand {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    z-index: 2;
+  }
+
+  /* Subtle glow effect */
+  .tv-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 35px;
+    z-index: -1;
+  }
+
+  /* Channel switching animations with static effect */
+  .channel-switch-enter {
+    opacity: 0;
+    filter: brightness(0.3) contrast(0.1) saturate(0);
+  }
+
+  .channel-switch-enter-active {
+    opacity: 1;
+    filter: brightness(1) contrast(1) saturate(1);
+    transition: all 0.3s ease-out;
+  }
+
+  .channel-switch-exit {
+    opacity: 1;
+    filter: brightness(1) contrast(1) saturate(1);
+  }
+
+  .channel-switch-exit-active {
+    opacity: 0;
+    filter: brightness(0.3) contrast(0.1) saturate(0);
+    transition: all 0.3s ease-in;
+  }
+
+  /* TV static transition effect */
+  .tv-static-transition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(255, 255, 255, 0.4) 1px,
+        rgba(255, 255, 255, 0.4) 2px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 1px,
+        rgba(255, 255, 255, 0.3) 1px,
+        rgba(255, 255, 255, 0.3) 2px
+      ),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.1) 2px,
+        rgba(255, 255, 255, 0.1) 4px
+      ),
+      radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.2) 0%, transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.15) 0%, transparent 35%);
+    z-index: 1002;
+    pointer-events: none;
+    opacity: 0;
+    animation: heavyStaticTransition 0.8s ease-out;
+  }
+
+  @keyframes heavyStaticTransition {
+    0% { opacity: 0; }
+    5% { opacity: 0.9; }
+    10% { opacity: 0.7; }
+    15% { opacity: 1; }
+    20% { opacity: 0.8; }
+    25% { opacity: 0.95; }
+    30% { opacity: 0.85; }
+    35% { opacity: 1; }
+    40% { opacity: 0.9; }
+    45% { opacity: 0.95; }
+    50% { opacity: 0.85; }
+    55% { opacity: 1; }
+    60% { opacity: 0.9; }
+    65% { opacity: 0.8; }
+    70% { opacity: 0.95; }
+    75% { opacity: 0.7; }
+    80% { opacity: 0.85; }
+    85% { opacity: 0.6; }
+    90% { opacity: 0.4; }
+    95% { opacity: 0.2; }
+    100% { opacity: 0; }
+  }
+
+  /* Channel flicker effect */
+  .channel-flicker {
+    animation: flicker 0.3s ease-in-out;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    10% { opacity: 0.8; }
+    20% { opacity: 0.9; }
+    30% { opacity: 0.7; }
+    40% { opacity: 1; }
+    50% { opacity: 0.8; }
+    60% { opacity: 0.9; }
+    70% { opacity: 0.6; }
+    80% { opacity: 1; }
+    90% { opacity: 0.9; }
+  }
+
+  /* TV turn-on effect */
+  .tv-turn-on {
+    animation: turnOn 0.8s ease-out;
+  }
+
+  @keyframes turnOn {
+    0% {
+      transform: scaleY(0.01) scaleX(0.8);
+      filter: brightness(10) contrast(5);
+    }
+    20% {
+      transform: scaleY(0.05) scaleX(0.9);
+      filter: brightness(8) contrast(4);
+    }
+    50% {
+      transform: scaleY(0.3) scaleX(1.1);
+      filter: brightness(3) contrast(2);
+    }
+    80% {
+      transform: scaleY(0.9) scaleX(1.05);
+      filter: brightness(1.5) contrast(1.2);
+    }
+    100% {
+      transform: scaleY(1) scaleX(1);
+      filter: brightness(1) contrast(1);
+    }
+  }
+
+  /* Channel number overlay */
+  .channel-number {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    z-index: 1003;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+  }
+
+  .channel-number.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Navigation transition effects */
+  .nav-transition {
+    position: relative;
+  }
+
+  .nav-transition:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@layer utilities {
+  .text-spotify-green {
+    color: var(--spotify-green);
+  }
+  
+  .bg-spotify-green {
+    background-color: var(--spotify-green);
+  }
+  
+  .text-accent-orange {
+    color: var(--accent-orange);
+  }
+  
+  .bg-accent-orange {
+    background-color: var(--accent-orange);
+  }
+  
+  .bg-dark-primary {
+    background-color: var(--dark-primary);
+  }
+  
+  .bg-dark-secondary {
+    background-color: var(--dark-secondary);
+  }
+  
+  .bg-dark-tertiary {
+    background-color: var(--dark-tertiary);
+  }
+  
+  .text-muted {
+    color: var(--text-muted);
+  }
+}
+
+/* Custom animations */
+@keyframes pulse-wave {
+  0%, 100% { height: 20px; }
+  50% { height: 100px; }
+}
+
+.animate-pulse-wave {
+  animation: pulse-wave 2s infinite;
+}
+
+@keyframes spin-record {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-record {
+  animation: spin-record 12s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-record 4s linear infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(45deg, #ffffff, var(--text-muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hero background animations */
+.hero-gradient {
+  background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 50%, var(--dark-tertiary) 100%);
+}
+
+.hero-overlay {
+  background: linear-gradient(90deg, rgba(29, 185, 84, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+}
