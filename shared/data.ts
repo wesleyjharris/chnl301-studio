@@ -29,7 +29,7 @@ export const seedArtists: Artist[] = [
   },
   {
     id: 3,
-    name: "Natty Clxssic",
+    name: "Natty Harris",
     role: "",
     bio: "Nathaniel Harris (aka Natty Clxssic) is a Los Angeles-based producer, composer, and keyboardist whose sound lives at the intersection of R&B, hip hop, cinematic scoring, afrobeat, and beyond. With over 20 years of musical experience—ranging from performing as a concert pianist with professional orchestras to crafting beats in the studio—Natty Clxssic brings both classical training and creative versatility to every project.\n\nHis music blends organic and synthesized textures to form rich, immersive soundscapes marked by an instinctive sense of harmony and melody. Whether he's scoring films, producing for rising artists, or composing original jingles for media platforms, Nathaniel approaches each composition with precision, emotion, and originality.",
     imageUrl: "/natty-clxssic-studio.jpg",
